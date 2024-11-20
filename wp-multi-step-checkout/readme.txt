@@ -4,8 +4,8 @@ Contributors: diana_burduja
 Email: diana@burduja.eu
 Tags: multistep checkout, multi step checkout, woocommerce, shop checkout, checkout steps
 Requires at least: 3.0.1
-Tested up to: 6.6
-Stable tag: 2.29
+Tested up to: 6.7
+Stable tag: 2.30
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -82,6 +82,10 @@ Another possible cause could be that the checkout page isn't using the default [
 6. On mobile devices
 
 == Changelog ==
+
+= 2.30 2024-11-20 =
+* Feature: add the "Hide the Shipping step if there are only virtual products in the cart" option
+* Fix: remove the errors after changing the value of the input field
 
 = 2.29 2024-09-10 =
 * Tweak: adjust to the changes in the WooCommerce /templates/checkout/form-login.php file.

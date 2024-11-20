@@ -110,6 +110,17 @@ jQuery(window).ready(function($){
 				self.switch_tab( 0 );
 			});
 
+			// Remove the errors after changing the value of the input field
+			$( '.wpmc-step-item.current input, .wpmc-step-item.current select, .wpmc-step-item.current textarea' ).on( 'change', function() {
+				if ( $('.woocommerce-error').length === 0 ) return true;
+				if ( $('.woocommerce-error li[data-id=' + $(this).attr('id') + ']').length > 0 ) {
+					$('.woocommerce-error li[data-id=' + $(this).attr('id') + ']').remove();
+				}
+				if ( $('.woocommerce-error li').length === 0 ) {
+					$('.woocommerce-error').remove();
+				}
+			});
+
 			// customizations
 			self.customizations();
 

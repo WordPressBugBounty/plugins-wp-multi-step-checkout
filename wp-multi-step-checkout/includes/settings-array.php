@@ -31,6 +31,12 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 				'value'      => true,
 				'section'    => 'general',
 			),
+			'hide_shipping_step_virtual' => array(
+				'label'      => __( 'Hide the <code>Shipping</code> step if there are only virtual products in the cart', 'wp-multi-step-checkout' ),
+				'input_form' => 'checkbox',
+				'value'      => false,
+				'section'    => 'general',
+			),
 			'show_login_step'          => array(
 				'label'      => __( 'Show the <code>Login</code> step', 'wp-multi-step-checkout' ),
 				'input_form' => 'text',
@@ -469,16 +475,23 @@ if ( ! function_exists( 'wmsc_delete_step_by_category' ) ) {
 	 */
 	function wmsc_delete_step_by_category( $steps ) {
 
-		$settings = apply_filters(
-			'wmsc_delete_step_by_category',
-			array(
-				'remove_step'                           => 'shipping',
-				'one_product_in_categories'             => array(),
-				'all_products_in_categories'            => array(),
-				'one_product_in_all_except_categories'  => array(),
-				'all_products_in_all_except_categories' => array(),
-			)
+		$default_settings = array(
+			'remove_step'                           => 'shipping',
+			'one_product_in_categories'             => array(),
+			'all_products_in_categories'            => array(),
+			'one_product_in_all_except_categories'  => array(),
+			'all_products_in_all_except_categories' => array(),
+			'virtual_products'                      => false,
 		);
+
+		$settings = apply_filters( 'wmsc_delete_step_by_category', $default_settings );
+
+		foreach( $default_settings as $_id => $_value ) {
+			if ( ! isset( $settings[ $_id ] ) ) {
+				$settings[ $_id ] = $_value;
+			}
+		}
+
 		extract( $settings );
 
 		$cart     = WC()->cart->get_cart_contents();
@@ -488,9 +501,14 @@ if ( ! function_exists( 'wmsc_delete_step_by_category' ) ) {
 			return $steps;
 		}
 
+		$only_virtual_products = true;
 		foreach ( $cart as $_product ) {
 			$this_product_in_category = false;
 			$_cat                     = get_the_terms( $_product['product_id'], 'product_cat' );
+
+			if ( $only_virtual_products && ! $_product['data']->is_virtual() ) {
+				$only_virtual_products = false;
+			}
 			if ( is_array( $_cat ) && count( $_cat ) > 0 ) {
 				foreach ( $_cat as $__cat ) {
 					$products[ $_product['product_id'] ][] = $__cat->slug;
@@ -535,6 +553,10 @@ if ( ! function_exists( 'wmsc_delete_step_by_category' ) ) {
 			if ( count( array_intersect( $all_products_in_all_except_categories, $products_intersect ) ) === 0 ) {
 				unset( $steps[ $remove_step ] );
 			}
+		}
+
+		if ( $virtual_products && $only_virtual_products ) {
+			unset( $steps[ $remove_step ] );
 		}
 
 		return $steps;

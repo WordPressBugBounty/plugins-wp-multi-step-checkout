@@ -3,7 +3,7 @@
  * Plugin Name: Multi-Step Checkout for WooCommerce
  * Plugin URI: https://wordpress.org/plugins/wp-multi-step-checkout/
  * Description: Split the different sections of the default WooCommerce checkout page into multiple steps
- * Version: 2.29
+ * Version: 2.30
  * Author: SilkyPress
  * Author URI: https://www.silkypress.com
  * License: GPL2
@@ -12,7 +12,7 @@
  * Domain Path: /languages/
  *
  * WC requires at least: 3.0.0
- * WC tested up to: 9.3
+ * WC tested up to: 9.7
  * Requires PHP: 5.2.4
  *
  * @package WPMultiStepCheckout
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '2.29';
+		public $version = '2.30';
 
 		/**
 		 * Plugin's options.
@@ -138,6 +138,8 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 			add_action( 'wmsc_step_content_login', 'wmsc_step_content_login', 10 );
 			add_action( 'wmsc_step_content_shipping', 'wmsc_step_content_shipping', 10 );
 			add_action( 'wmsc_step_content_billing', 'wmsc_step_content_billing', 10 );
+
+			add_filter( 'wmsc_delete_step_by_category', array( $this, 'hide_shipping_step_virtual' ) ); 
 		}
 
 		/**
@@ -240,6 +242,21 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 			update_option( 'wmsc_options', $new_options );
 			delete_option( 'wpmc-settings' );
 		}
+
+
+		/*
+		 * Hide the "Shipping" step if there are only virtual products in the cart.
+		 */
+		public function hide_shipping_step_virtual( $settings ) {
+
+			$options = get_option( 'wmsc_options' );
+
+			if ( isset( $options['hide_shipping_step_virtual'] ) && $options['hide_shipping_step_virtual'] ) {
+				$settings['virtual_products'] = true;
+			}
+
+			return $settings;
+		} 
 
 	}
 
