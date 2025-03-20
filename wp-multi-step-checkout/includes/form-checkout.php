@@ -32,6 +32,8 @@ if ( isset($options['t_wpml']) && $options['t_wpml'] == 1 ) {
 }
 
 if ( !isset($options['c_sign']) ) $options['c_sign'] = '&';
+if ( !isset($options['show_login_step']) ) $options['show_login_step'] = true;
+
 
 // Get the steps
 $steps = get_wmsc_steps();
@@ -128,7 +130,7 @@ do_action( 'wpmc_after_step_tabs' );
 
 <!-- Step: Login -->
 <?php 
-    if ( $show_login_step ) {
+	if ( $show_login_step && $options['show_login_step'] ) {
         wmsc_step_content_login($checkout, $stop_at_login); 
     }
 
@@ -141,7 +143,7 @@ do_action( 'wpmc_after_step_tabs' );
 
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( $checkout_url ); ?>" enctype="multipart/form-data">
 
-<?php $first_step = ( $show_login_step ) ? '' : ' current';
+<?php $first_step = ( $show_login_step && $options['show_login_step'] ) ? '' : ' current';
 
 foreach( $steps as $_id => $_step ) {
     echo '<!-- Step: '.$_step['title'].' -->'; 

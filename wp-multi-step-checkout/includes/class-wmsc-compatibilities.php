@@ -16,31 +16,31 @@ class WMSC_Compatibilities {
 	 * Initiate the class.
 	 */
 	public static function init() {
-		add_action( 'wp_enqueue_scripts', 'WMSC_Compatibilities::wp_enqueue_scripts', 40 );
-		add_action( 'wp_head', 'WMSC_Compatibilities::wp_head_js', 40 );
-		add_action( 'after_setup_theme', 'WMSC_Compatibilities::after_setup_theme', 40 );
-		add_action( 'wp', 'WMSC_Compatibilities::wp', 40 );
-		add_filter( 'wpmc_modify_steps', 'WMSC_Compatibilities::wpmc_modify_steps', 20 );
-		add_filter( 'woocommerce_locate_template', 'WMSC_Compatibilities::woocommerce_locate_template', 30, 3 );
-		add_filter( 'woocommerce_germanized_filter_template', 'WMSC_Compatibilities::woocommerce_germanized_filter_template', 30, 3 );
-		add_action( 'elementor/init', 'WMSC_Compatibilities::elementor_pro_widget', 30 );
-		add_action( 'before_woocommerce_init', 'WMSC_Compatibilities::before_woocommerce_init' );
-		add_action( 'woocommerce_checkout_fields', 'WMSC_Compatibilities::woocommerce_checkout_fields' );
-		add_action( 'woocommerce_checkout_posted_data', 'WMSC_Compatibilities::woocommerce_checkout_posted_data' );
-		add_filter( 'woocommerce_registration_error_email_exists', 'WMSC_Compatibilities::woocommerce_registration_error_email_exists' );
-		add_action( 'woocommerce_check_cart_items', 'WMSC_Compatibilities::woo_delivery_plugin' );
-		add_filter( 'wmsc_settings_admin', 'WMSC_Compatibilities::woo_delivery_admin_settings' );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'wp_enqueue_scripts' ), 40 );
+		add_action( 'wp_head', array( __CLASS__, 'wp_head_js' ), 40 );
+		add_action( 'after_setup_theme', array( __CLASS__, 'after_setup_theme' ), 40 );
+		add_action( 'wp', array( __CLASS__, 'wp' ), 40 );
+		add_filter( 'wpmc_modify_steps', array( __CLASS__, 'wpmc_modify_steps' ), 20 );
+		add_filter( 'woocommerce_locate_template', array( __CLASS__, 'woocommerce_locate_template' ), 30, 3 );
+		add_filter( 'woocommerce_germanized_filter_template', array( __CLASS__, 'woocommerce_germanized_filter_template' ), 30, 3 );
+		add_action( 'elementor/init', array( __CLASS__, 'elementor_pro_widget' ), 30 );
+		add_action( 'before_woocommerce_init', array( __CLASS__, 'before_woocommerce_init' ) );
+		add_filter( 'woocommerce_checkout_fields', array( __CLASS__, 'woocommerce_checkout_fields' ) );
+		add_filter( 'woocommerce_checkout_posted_data', array( __CLASS__, 'woocommerce_checkout_posted_data' ) );
+		add_filter( 'woocommerce_registration_error_email_exists', array( __CLASS__, 'woocommerce_registration_error_email_exists' ) );
+		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'woo_delivery_plugin' ) );
+		add_filter( 'wmsc_settings_admin', array( __CLASS__, 'woo_delivery_admin_settings' ) );
 
 		// Separate step for the Minimum Age for WooCommerce plugin.
 		if ( defined( 'MIN_AGE_WOO_FILE' ) ) {
-			add_filter( 'woocommerce_get_settings_minimum-age-woocommerce', 'WMSC_Compatibilities::wpmc_minimum_age_settings', 50, 2 );
-			add_filter( 'wmsc_settings_admin', 'WMSC_Compatibilities::wpmc_minimum_age_admin_settings', 50 );
+			add_filter( 'woocommerce_get_settings_minimum-age-woocommerce', array( __CLASS__, 'wpmc_minimum_age_settings' ), 50, 2 );
+			add_filter( 'wmsc_settings_admin', array( __CLASS__, 'wpmc_minimum_age_admin_settings' ), 50 );
 
 			$options = get_option( 'wmsc_options', array() );
 			if ( isset( $options['minimum_age_woo'] ) && $options['minimum_age_woo'] ) {
-				add_filter( 'wpmc_modify_steps', 'WMSC_Compatibilities::wpmc_add_minimum_age_step' );
-				add_action( 'wmsc_step_content_minimum_age', 'WMSC_Compatibilities::wmsc_step_content_minimum_age' );
-				add_filter( 'mininum_age_woo_checkout_hook', 'WMSC_Compatibilities::mininum_age_woo_checkout_hook_filter', 50 );
+				add_filter( 'wpmc_modify_steps', array( __CLASS__, 'wpmc_add_minimum_age_step' ) );
+				add_action( 'wmsc_step_content_minimum_age', array( __CLASS__, 'wmsc_step_content_minimum_age' ) );
+				add_filter( 'mininum_age_woo_checkout_hook', array( __CLASS__, 'mininum_age_woo_checkout_hook_filter' ), 50 );
 			}
 		}
 
@@ -191,7 +191,7 @@ class WMSC_Compatibilities {
 			remove_action('woocommerce_checkout_after_customer_details', 'huntor_checkout_after_customer_details_container', 1);
 			remove_action('woocommerce_checkout_after_order_review', 'huntor_checkout_after_order_review_container', 1);
 			remove_action('woocommerce_checkout_order_review', 'huntor_woocommerce_order_review_heading', 1);
-			add_action( 'wmsc_buttons_class', 'WMSC_Compatibilities::huntor_buttons' );
+			add_action( 'wmsc_buttons_class', array( __CLASS__, 'huntor_buttons' ) );
 		}
 
 		/*
@@ -373,14 +373,14 @@ class WMSC_Compatibilities {
 				remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
 				add_action( 'woocommerce_after_shop_loop_item', 'astra_woo_woocommerce_shop_product_content' );
 			}
-			add_filter( 'astra_get_option_checkout-layout-type', 'WMSC_Compatibilities::astra_get_option_checkout_layout_type', 10, 3 );
+			add_filter( 'astra_get_option_checkout-layout-type', array( __CLASS__, 'astra_get_option_checkout_layout_type' ), 10, 3 );
 		}
 
 		/**
 		 * Porto theme.
 		 */
 		if ( strpos( $theme, 'porto' ) !== false ) {
-			add_filter( 'porto_filter_checkout_version', 'WMSC_Compatibilities::porto_checkout_version' );
+			add_filter( 'porto_filter_checkout_version', array( __CLASS__, 'porto_checkout_version' ) );
 		}
 
 		/**
@@ -395,14 +395,14 @@ class WMSC_Compatibilities {
 		 * Neve theme.
 		 */
 		if ( strpos( $theme, 'neve' ) !== false ) {
-			add_filter( 'woocommerce_queued_js', 'WMSC_Compatibilities::neve_remove_js' );
+			add_filter( 'woocommerce_queued_js', array( __CLASS__, 'neve_remove_js' ) );
 		}
 
 		/**
 		 * Woodmart theme.
 		 */
 		if ( strpos( $theme, 'woodmart' ) !== false ) {
-			add_filter( 'wmsc_buttons_class', 'WMSC_Compatibilities::woodmart_buttons' );
+			add_filter( 'wmsc_buttons_class', array( __CLASS__, 'woodmart_buttons' ) );
 		}
 
 		/**
@@ -417,7 +417,7 @@ class WMSC_Compatibilities {
 		 * Flatsome theme.
 		 */
 		if ( strpos( $theme, 'flatsome' ) !== false ) {
-			add_filter( 'wmsc_js_variables', 'WMSC_Compatibilities::flatsome_scroll_top' );
+			add_filter( 'wmsc_js_variables', array( __CLASS__, 'flatsome_scroll_top' ) );
 		}
 
 		/*
@@ -435,7 +435,7 @@ class WMSC_Compatibilities {
 			remove_action( 'woocommerce_checkout_after_order_review', array( 'WC_Twenty_Twenty_Three', 'before_order_review' ) );
 			remove_action( 'woocommerce_checkout_before_order_review_heading', array( 'WC_Twenty_Twenty_Two', 'before_order_review' ) );
 			remove_action( 'woocommerce_checkout_after_order_review', array( 'WC_Twenty_Twenty_Two', 'before_order_review' ) );
-			add_filter( 'wmsc_buttons_class', 'WMSC_Compatibilities::twentytwenty_buttons' );
+			add_filter( 'wmsc_buttons_class', array( __CLASS__, 'twentytwenty_buttons' ) );
 		}
 	}
 
@@ -502,7 +502,7 @@ class WMSC_Compatibilities {
 		if ( strpos( $theme, 'botiga' ) !== false ) {
 			remove_action( 'woocommerce_checkout_before_order_review_heading', 'botiga_wrap_order_review_before', 5 );
 			remove_action( 'woocommerce_checkout_after_order_review', 'botiga_wrap_order_review_after', 15 );
-			add_filter( 'theme_mod_shop_checkout_layout', 'WMSC_Compatibilities::theme_mod_shop_checkout_layout', 20 );
+			add_filter( 'theme_mod_shop_checkout_layout', array( __CLASS__, 'theme_mod_shop_checkout_layout' ), 20 );
 		}
 	}
 
@@ -609,8 +609,8 @@ class WMSC_Compatibilities {
 			add_action( 'wmsc_step_content_review', 'wmsc_step_content_review_germanized', 10 );
 			add_action( 'wmsc_step_content_payment', 'wmsc_step_content_payment_germanized', 10 );
 			add_action( 'wpmc-woocommerce_order_review', 'woocommerce_gzd_template_render_checkout_checkboxes', 10 );
-			add_filter( 'wc_gzd_checkout_params', 'WMSC_Compatibilities::wc_gzd_checkout_params' );
-			add_filter( 'wp_loaded', 'WMSC_Compatibilities::woocommerce_review_order_after_payment' );
+			add_filter( 'wc_gzd_checkout_params', array( __CLASS__, 'wc_gzd_checkout_params' ) );
+			add_filter( 'wp_loaded', array( __CLASS__, 'woocommerce_review_order_after_payment' ) );
 		} elseif ( class_exists( 'Woocommerce_German_Market' ) ) {
 			/*
 			 * WooCommerce German Market plugin.
@@ -994,8 +994,8 @@ class WMSC_Compatibilities {
 			return;
 		}
 	
-		add_filter( 'wpmc_modify_steps', 'WMSC_Compatibilities::wpmc_add_woo_delivery_step' );
-		add_action( 'wmsc_step_content_woo_delivery', 'WMSC_Compatibilities::wmsc_step_content_woo_delivery' );
+		add_filter( 'wpmc_modify_steps', array( __CLASS__, 'wpmc_add_woo_delivery_step' ) );
+		add_action( 'wmsc_step_content_woo_delivery', array( __CLASS__, 'wmsc_step_content_woo_delivery' ) );
 		$woo_delivery_hooks = [
 			'woocommerce_checkout_billing',
 			'woocommerce_after_checkout_billing_form',

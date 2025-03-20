@@ -5,7 +5,7 @@ Email: diana@burduja.eu
 Tags: multistep checkout, multi step checkout, woocommerce, shop checkout, checkout steps
 Requires at least: 3.0.1
 Tested up to: 6.7
-Stable tag: 2.30.1
+Stable tag: 2.32
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -82,6 +82,10 @@ Another possible cause could be that the checkout page isn't using the default [
 6. On mobile devices
 
 == Changelog ==
+
+= 2.32 2025-03-20 =
+* Feature: option for disabling the plugin on mobile devices
+* Feature: option for toggling the default WooCommerce login form and the Login step
 
 = 2.31 2024-11-22 =
 * Fix: use the pro version, if both the free and the pro version are simultaneously active

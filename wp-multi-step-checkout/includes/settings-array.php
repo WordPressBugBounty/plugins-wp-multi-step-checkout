@@ -15,8 +15,17 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 	function get_wmsc_settings() {
 
 		$account_url                      = admin_url( 'admin.php?page=wc-settings&tab=account' );
-		$no_login_screenshot              = 'https://www.silkypress.com/wp-content/uploads/2018/09/multi-step-checkout-no-login.png';
 		$registration_settings_screenshot = 'https://www.silkypress.com/wp-content/uploads/2019/09/registration-description.png';
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '9.2.0', '>=' ) ) {
+		    $no_login_screenshot          = 'https://www.silkypress.com/wp-content/uploads/2025/03/multi-step-checkout-no-login-9-2.png';
+			/* translators: 1: Woocommerce Accounts URL 2: Screenshot URL. */
+			$show_login_step              =  sprintf( __( 'Use the "Enable log-in during checkout" option on the <a href="%1$s">WP Admin -> WooCommerce -> Settings -> Accounts</a> page to add/remove the login form to the checkout. See <a href="%2$s" target="_blank">this screenshot</a>.', 'wp-multi-step-checkout' ), esc_url( $account_url ), esc_url( $no_login_screenshot ) );
+		} else {
+			$no_login_screenshot          = 'https://www.silkypress.com/wp-content/uploads/2018/09/multi-step-checkout-no-login.png';
+			/* translators: 1: Woocommerce Accounts URL 2: Screenshot URL. */
+			$show_login_step              =  sprintf( __( 'Use the "Allow customers to log into an existing account during checkout" option on the <a href="%1$s">WP Admin -> WooCommerce -> Settings -> Accounts</a> page to add/remove the login form to the checkout. See <a href="%2$s" target="_blank">this screenshot</a>.', 'wp-multi-step-checkout' ), esc_url( $account_url ), esc_url( $no_login_screenshot ) );
+		}
+
 		$wmsc_settings                    = array(
 			/* General Settings */
 			'label1'                   => array(
@@ -24,6 +33,21 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 				'input_form' => 'header',
 				'value'      => '',
 				'section'    => 'general',
+			),
+			'show_login_step'          => array(
+				'label'      => __( 'Show the <code>Login</code> step', 'wp-multi-step-checkout' ),
+				'input_form' => 'checkbox',
+				'value'      => true,
+				'description'=> __( 'If unchecked, then the login form will show up before the steps, as WooCommerce normally shows it.', 'wp-multi-step-checkout-pro' ),
+				'section'    => 'general',
+				'pro'        => false,
+			),
+			'show_login_desc'          => array(
+				'label'      => '',
+				'input_form' => 'text',
+				'value'      => sprintf( $show_login_step, esc_url( $account_url ), esc_url( $no_login_screenshot ) ),
+				'section'    => 'general',
+				'pro'        => false,
 			),
 			'show_shipping_step'       => array(
 				'label'      => __( 'Show the <code>Shipping</code> step', 'wp-multi-step-checkout' ),
@@ -35,13 +59,6 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 				'label'      => __( 'Hide the <code>Shipping</code> step if there are only virtual products in the cart', 'wp-multi-step-checkout' ),
 				'input_form' => 'checkbox',
 				'value'      => false,
-				'section'    => 'general',
-			),
-			'show_login_step'          => array(
-				'label'      => __( 'Show the <code>Login</code> step', 'wp-multi-step-checkout' ),
-				'input_form' => 'text',
-				/* translators: 1: Woocommerce Accounts URL 2: Screenshot URL. */
-				'value'      => sprintf( __( ' For removing the login step you need to uncheck the "Allow customers to log into an existing account during checkout" option on the <a href="%1$s">WP Admin -> WooCommerce -> Settings -> Accounts</a> page. See <a href="%2$s" target="_blank">this screenshot</a>.', 'wp-multi-step-checkout' ), esc_url( $account_url ), esc_url( $no_login_screenshot ) ),
 				'section'    => 'general',
 			),
 			'unite_billing_shipping'   => array(
@@ -144,6 +161,13 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 				'section'     => 'general',
 				'pro'         => true,
 			),
+			'disable_mobile'            => array(
+				'label'       => __( 'Disable plugin on mobile devices', 'wp-multi-step-checkout-pro' ),
+				'description' => __( 'On mobile devices (smart phone, tablet, etc.) your customers will see the default WooCommerce checkout form, without the steps from the Multi-Step Checkout for WooCommerce plugin', 'wp-multi-step-checkout' ),
+				'input_form'  => 'checkbox',
+				'value'       => false,
+				'section'     => 'general',
+			),
 
 			/* Templates */
 			'main_color'               => array(
@@ -160,6 +184,7 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 					'default'    => __( 'Default', 'wp-multi-step-checkout' ),
 					'md'         => __( 'Material Design', 'wp-multi-step-checkout' ),
 					'breadcrumb' => __( 'Breadcrumbs', 'wp-multi-step-checkout' ),
+					'underline'  => __( 'Underline', 'wp-multi-step-checkout' ),
 				),
 				'section'    => 'design',
 				'pro'        => true,
@@ -320,7 +345,7 @@ if ( ! function_exists( 'wmsc_step_content_login' ) ) {
 	 * @param object $checkout The Checkout object from the WooCommerce plugin.
 	 * @param bool   $stop_at_login If the user should be logged in in order to checkout.
 	 */
-	function wmsc_step_content_login( $checkout, $stop_at_login ) { ?> 
+	function wmsc_step_content_login( $checkout, $stop_at_login, $registration_with_login = true ) { ?> 
 	<div class="wpmc-step-item wpmc-step-login">
 			<div id="checkout_login" class="woocommerce_checkout_login wp-multi-step-checkout-step">
 				<?php
@@ -341,6 +366,20 @@ if ( ! function_exists( 'wmsc_step_content_login' ) ) {
 	</div>
 	<?php }
 }
+
+
+/**
+ * If the "Show the Login step" option is unchecked, then show the default WooCommerce login form.
+ */
+add_action( 'wpmc_before_tabs', function() {
+
+	$options = get_option('wmsc_options');
+
+	if ( isset( $options['show_login_step'] ) && ! $options['show_login_step'] ) {
+		woocommerce_checkout_login_form();
+	}
+});
+
 
 if ( ! function_exists( 'wmsc_step_content_billing' ) ) {
 

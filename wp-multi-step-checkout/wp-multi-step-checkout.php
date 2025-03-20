@@ -1,19 +1,20 @@
 <?php
 /**
- * Plugin Name: Multi-Step Checkout for WooCommerce
- * Plugin URI: https://wordpress.org/plugins/wp-multi-step-checkout/
- * Description: Split the different sections of the default WooCommerce checkout page into multiple steps
- * Version: 2.30.1
- * Author: SilkyPress
- * Author URI: https://www.silkypress.com
- * License: GPL2
+ * Plugin Name:          Multi-Step Checkout for WooCommerce
+ * Requires Plugins:     woocommerce
+ * Plugin URI:           https://wordpress.org/plugins/wp-multi-step-checkout/
+ * Description:          Split the different sections of the default WooCommerce checkout page into multiple steps
+ * Version:              2.32
+ * Author:               SilkyPress
+ * Author URI:           https://www.silkypress.com
+ * License:              GPL2
  *
- * Text Domain: wp-multi-step-checkout
- * Domain Path: /languages/
+ * Text Domain:          wp-multi-step-checkout
+ * Domain Path:          /languages/
  *
  * WC requires at least: 3.0.0
- * WC tested up to: 9.7
- * Requires PHP: 5.2.4
+ * WC tested up to:      9.8
+ * Requires PHP:         5.2.4
  *
  * @package WPMultiStepCheckout
  */
@@ -24,79 +25,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 	/**
-	 * Main WPMultiStepCheckout Class
-	 *
 	 * @class WPMultiStepCheckout
 	 */
-	final class WPMultiStepCheckout {
+	class WPMultiStepCheckout {
 
 		/**
 		 * Plugin's version.
 		 *
 		 * @var string
 		 */
-		public $version = '2.30.1';
+		public static $version = '2.32';
 
 		/**
 		 * Plugin's options.
 		 *
 		 * @var array
 		 */
-		public $options = array();
+		public static $options = array();
+
+
+		public function __construct() {}
 
 		/**
-		 * The instance of the class.
-		 *
-		 * @var WPMultiStepCheckout
+		 * WPMultiStepCheckout plugin init. 
 		 */
-		protected static $_instance = null;
-
-
-		/**
-		 * Main WPMultiStepCheckout Instance
-		 *
-		 * Ensures only one instance of WPMultiStepCheckout is loaded or can be loaded
-		 *
-		 * @static
-		 * @return WPMultiStepCheckout - Main instance
-		 */
-		public static function instance() {
-			if ( is_null( self::$_instance ) ) {
-				self::$_instance = new self();
-			}
-			return self::$_instance;
-		}
-
-		/**
-		 * Cloning is forbidden.
-		 */
-		public function __clone() {
-			_doing_it_wrong( __FUNCTION__, __( 'An error has occurred. Please reload the page and try again.' ), '1.0' );
-		}
-
-		/**
-		 * Unserializing instances of this class is forbidden.
-		 */
-		public function __wakeup() {
-			_doing_it_wrong( __FUNCTION__, __( 'An error has occurred. Please reload the page and try again.' ), '1.0' );
-		}
-
-		/**
-		 * WPMultiStepCheckout Constructor
-		 */
-		public function __construct() {
+		public static function init() {
 
 			define( 'WMSC_PLUGIN_FILE', __FILE__ );
 			define( 'WMSC_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
 			define( 'WMSC_PLUGIN_PATH', plugin_dir_url( '/', __FILE__ ) );
-			define( 'WMSC_VERSION', $this->version );
+			define( 'WMSC_VERSION', self::$version );
 
 			if ( class_exists( 'WPMultiStepCheckoutPro' ) ) {
                 return false;
             }
 
 			if ( ! class_exists( 'woocommerce' ) ) {
-				add_action( 'admin_notices', array( $this, 'install_woocommerce_admin_notice' ) );
+				add_action( 'admin_notices', array( __CLASS__, 'install_woocommerce_admin_notice' ) );
 				return false;
 			}
 
@@ -104,15 +69,25 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 				include_once 'includes/admin-side.php';
 			}
 
-			$this->update_14_version();
 
-			add_filter( 'woocommerce_locate_template', array( $this, 'woocommerce_locate_template' ), 30, 3 );
+			// Disable on mobile devices, if necessary.
+			self::$options = get_option( 'wmsc_options', array() );
+			if ( isset( self::$options['disable_mobile'] ) && self::$options['disable_mobile'] && wp_is_mobile() ) {
+				return;
+			}
 
-			$this->adjust_hooks();
 
-			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+			self::update_14_version();
 
-			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+			add_filter( 'woocommerce_locate_template', array( __CLASS__, 'woocommerce_locate_template' ), 30, 3 );
+
+			self::adjust_hooks();
+
+			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'wp_enqueue_scripts' ) );
+
+			add_action( 'init', array( __CLASS__, 'load_plugin_textdomain' ) );
+
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( __CLASS__, 'settings_link' ) );
 
 			include_once 'includes/class-wmsc-compatibilities.php';
 		}
@@ -121,7 +96,7 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		/**
 		 * Modify the default WooCommerce hooks
 		 */
-		public function adjust_hooks() {
+		public static function adjust_hooks() {
 			// Remove login messages.
 			remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 			remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
@@ -143,7 +118,7 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 			add_action( 'wmsc_step_content_shipping', 'wmsc_step_content_shipping', 10 );
 			add_action( 'wmsc_step_content_billing', 'wmsc_step_content_billing', 10 );
 
-			add_filter( 'wmsc_delete_step_by_category', array( $this, 'hide_shipping_step_virtual' ) ); 
+			add_filter( 'wmsc_delete_step_by_category', array( __CLASS__, 'hide_shipping_step_virtual' ) ); 
 		}
 
 		/**
@@ -154,7 +129,7 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		 * @param string $template_path Template path. (default: '').
 		 * @return string
 		 */
-		public function woocommerce_locate_template( $template, $template_name, $template_path ) {
+		public static function woocommerce_locate_template( $template, $template_name, $template_path ) {
 			if ( 'checkout/form-checkout.php' !== $template_name ) {
 				return $template;
 			}
@@ -165,15 +140,14 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		/**
 		 * Enqueue the JS and CSS assets
 		 */
-		public function wp_enqueue_scripts() {
+		public static function wp_enqueue_scripts() {
 
 			if ( ! is_checkout() ) {
 				return;
 			}
 
-			$options      = get_option( 'wmsc_options' );
-			$keyboard_nav = ( isset( $options['keyboard_nav'] ) && $options['keyboard_nav'] ) ? true : false;
-			$color        = ( isset( $options['main_color'] ) ) ? wp_strip_all_tags( $options['main_color'] ) : '#1e85be';
+			$keyboard_nav = ( isset( self::$options['keyboard_nav'] ) && self::$options['keyboard_nav'] ) ? true : false;
+			$color        = ( isset( self::$options['main_color'] ) ) ? wp_strip_all_tags( self::$options['main_color'] ) : '#1e85be';
 			$url          = plugins_url( '/', __FILE__ ) . 'assets/';
 			$prefix       = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
@@ -187,9 +161,9 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 			}
 
 			// Load scripts.
-			wp_register_script( 'wpmc', $url . 'js/script' . $prefix . '.js', array( 'jquery' ), $this->version, true );
+			wp_register_script( 'wpmc', $url . 'js/script' . $prefix . '.js', array( 'jquery' ), self::$version, true );
 			wp_localize_script( 'wpmc', 'WPMC', apply_filters( 'wmsc_js_variables', $vars ) );
-			wp_register_style( 'wpmc', $url . 'css/style-progress' . $prefix . '.css', array(), $this->version );
+			wp_register_style( 'wpmc', $url . 'css/style-progress' . $prefix . '.css', array(), self::$version );
 
 			wp_enqueue_script( 'wpmc' );
 			wp_enqueue_style( 'wpmc' );
@@ -206,7 +180,7 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		/**
 		 * Admin notice that WooCommerce is not activated
 		 */
-		public function install_woocommerce_admin_notice() {
+		public static function install_woocommerce_admin_notice() {
 			?>
 			<div class="error">
 			<p><?php _x( 'The <b>Multi-Step Checkout for WooCommerce</b> plugin is enabled, but it requires WooCommerce in order to work.', 'Alert Message: WooCommerce require', 'wp-multi-step-checkout' ); ?></p>
@@ -218,15 +192,27 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		/**
 		 * Load the textdomain
 		 */
-		public function load_plugin_textdomain() {
+		public static function load_plugin_textdomain() {
 			load_plugin_textdomain( 'wp-multi-step-checkout', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+		}
+
+		/**
+		 * Add Settings link on the Plugins page.
+		 *
+		 * @param array $links Currently available links.
+		 */
+		public static function settings_link( $links ) {
+			$action_links = array(
+				'settings' => '<a href="' . admin_url( 'admin.php?page=wmsc-settings' ) . '" aria-label="' . esc_attr__( 'View plugin\'s settings', 'wp-multi-step-checkout' ) . '">' . esc_html__( 'Settings', 'wp-multi-step-checkout' ) . '</a>',
+			);
+			return array_merge( $action_links, $links );
 		}
 
 
 		/**
 		 * Update options array for the 1.4 version
 		 */
-		public function update_14_version() {
+		public static function update_14_version() {
 			if ( ! $old_options = get_option( 'wpmc-settings' ) ) {
 				return;
 			}
@@ -251,11 +237,9 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		/*
 		 * Hide the "Shipping" step if there are only virtual products in the cart.
 		 */
-		public function hide_shipping_step_virtual( $settings ) {
+		public static function hide_shipping_step_virtual( $settings ) {
 
-			$options = get_option( 'wmsc_options' );
-
-			if ( isset( $options['hide_shipping_step_virtual'] ) && $options['hide_shipping_step_virtual'] ) {
+			if ( isset( self::$options['hide_shipping_step_virtual'] ) && self::$options['hide_shipping_step_virtual'] ) {
 				$settings['virtual_products'] = true;
 			}
 
@@ -264,28 +248,6 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 
 	}
 
+add_action( 'plugins_loaded', array( 'WPMultiStepCheckout', 'init' ) );
+
 endif;
-
-/**
- * Returns the main instance of WPMultiStepCheckout
- *
- * @return WPMultiStepCheckout
- */
-function WPMultiStepCheckout() {
-	return WPMultiStepCheckout::instance();
-}
-
-WPMultiStepCheckout();
-
-/**
- * Add Settings link on the Plugins page.
- *
- * @param array $links Currently available links.
- */
-function wpmc_plugin_settings_link( $links ) {
-	$action_links = array(
-		'settings' => '<a href="' . admin_url( 'admin.php?page=wmsc-settings' ) . '" aria-label="' . esc_attr__( 'View plugin\'s settings', 'wp-multi-step-checkout' ) . '">' . esc_html__( 'Settings', 'wp-multi-step-checkout' ) . '</a>',
-	);
-	return array_merge( $action_links, $links );
-}
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wpmc_plugin_settings_link' );

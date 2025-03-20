@@ -180,7 +180,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 					array( $_key, $_key, $atts ),
 				),
 				'header'      => array(
-					'<h4 class="col-sm-5">%s</h4><div style="clear: both;"></div>',
+					'<h4 class="col-sm-12">%s</h4><div style="clear: both;"></div>',
 					array( $_field['label'] ),
 				),
 			);

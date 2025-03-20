@@ -4,40 +4,42 @@ defined( 'ABSPATH' ) || exit;
 
 class WPMultiStepCheckout_Settings {
 
+	public function __construct() {}
+
     /**
-     * Constructor
+     * Initialize. 
      */
-    public function __construct() {
+	public static function init() {
 
         require_once 'settings-array.php';
         require_once 'frm/class-form-fields.php';
         require_once 'frm/premium-tooltips.php';
         require_once 'frm/warnings.php';
 
-        add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-        add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts') );
+        add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ) );
+        add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts') );
 
-        $this->warnings();
+        self::warnings();
     }
 
     /**
      * Create the menu link
      */
-    function admin_menu() {
+    public static function admin_menu() {
         add_submenu_page(
             'woocommerce', 
             'Multi-Step Checkout', 
             'Multi-Step Checkout', 
             'manage_options', 
 			'wmsc-settings',
-            array($this, 'admin_settings_page')
+            array( __CLASS__, 'admin_settings_page')
         );
     }
 
     /**
      * Enqueue the scripts and styles 
      */
-    function admin_enqueue_scripts() {
+    public static function admin_enqueue_scripts() {
         $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_URL);
         if ( $page != 'wmsc-settings' ) return false;
 
@@ -64,7 +66,7 @@ class WPMultiStepCheckout_Settings {
      * Output the admin page
      * @access public
      */
-	public function admin_settings_page() {
+	public static function admin_settings_page() {
 
         // Get the tabs. 
         $tabs = array(
@@ -84,7 +86,7 @@ class WPMultiStepCheckout_Settings {
 		$form = new \SilkyPressFrm\Form_Fields( $settings_all );
 		$form->add_setting( 'tooltip_img', plugins_url('/', WMSC_PLUGIN_FILE) . 'assets/images/question_mark.svg' );
 		$form->add_setting( 'section', $tab_current );
-		$form->add_setting( 'label_class', 'col-sm-5' );
+		$form->add_setting( 'label_class', 'col-sm-6' );
 		$form->set_current_values( $values_current );
 
 		// The settings were saved.
@@ -111,7 +113,7 @@ class WPMultiStepCheckout_Settings {
 		}
 
         // Premium tooltips.
-        $message = __('Only available in <a href="%1$s" target="_blank">PRO version</a>', 'wp-multi-step-checkout');
+        $message = __('Available only in <a href="%1$s" target="_blank">Pro version</a>', 'wp-multi-step-checkout');
         $message = wp_kses( $message, array('a' => array('href' => array(), 'target'=> array())));
         $message = sprintf( $message, 'https://www.silkypress.com/woocommerce-multi-step-checkout-pro/?utm_source=wordpress&utm_campaign=wmsc_free&utm_medium=banner');
         new SilkyPress_PremiumTooltips($message); 
@@ -128,7 +130,7 @@ class WPMultiStepCheckout_Settings {
     /**
      * Show admin warnings
      */
-    function warnings() {
+    public static function warnings() {
 
         $allowed_actions = array(
 			'wmsc_dismiss_suki_theme',
@@ -167,4 +169,4 @@ class WPMultiStepCheckout_Settings {
     }
 }
 
-new WPMultiStepCheckout_Settings();
+WPMultiStepCheckout_Settings::init();

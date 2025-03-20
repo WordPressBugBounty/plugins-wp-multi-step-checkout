@@ -60,7 +60,7 @@ input[type=color] {
     padding-top: 10px
 }
 .input-group {
-    width: 200px;
+    width: 40%;
     margin-top: 5px;
 }
 .btn-group-no-margin {
@@ -203,4 +203,7 @@ input[type="checkbox"] {
     border-radius: 0;
     line-height: 2rem;
     padding-left: 0.1rem !important;
+}
+label[for="hide_shipping_step_virtual"], label[for="unite_billing_shipping"] {
+    margin-bottom: 1em !important;
 }

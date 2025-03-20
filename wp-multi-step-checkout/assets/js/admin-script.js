@@ -27,6 +27,11 @@ jQuery(document).ready(function( $ ){
 	});
 
 	function toggle_shipping_virtual_products( enable = true ) {
-		$('#hide_shipping_step_virtual').closest('.form-group').css('display', enable ? 'block' : 'none');
+		let form_group = $('#hide_shipping_step_virtual').closest('.form-group');
+		if ( enable ) {
+			form_group.show('slow');
+		} else {
+			form_group.hide('slow');
+		}
 	}
 });
