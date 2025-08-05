@@ -4,7 +4,7 @@ Contributors: diana_burduja
 Email: diana@burduja.eu
 Tags: multistep checkout, multi step checkout, woocommerce, shop checkout, checkout steps
 Requires at least: 3.0.1
-Tested up to: 6.7
+Tested up to: 6.8
 Stable tag: 2.32
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html

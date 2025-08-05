@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$buttons_class = apply_filters( 'wmsc_buttons_class', 'button alt' );
+$buttons_class = apply_filters( 'wmsc_buttons_class', 'button alt wp-element-button' );
 $wrapper_class = apply_filters( 'wmsc_buttons_wrapper_class', 'wpmc-nav-wrapper' );
 $back_to_cart  = ( isset( $options['show_back_to_cart_button'] ) && $options['show_back_to_cart_button'] ) ? true : false;
 if ( ! $back_to_cart ) {
