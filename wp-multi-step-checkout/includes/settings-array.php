@@ -15,9 +15,9 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 	function get_wmsc_settings() {
 
 		$account_url                      = admin_url( 'admin.php?page=wc-settings&tab=account' );
-		$registration_settings_screenshot = 'https://www.silkypress.com/wp-content/uploads/2019/09/registration-description.png';
+		$registration_settings_screenshot = 'https://www.silkypress.com/wp-content/uploads/2025/08/registration-description.png';
 		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '9.2.0', '>=' ) ) {
-		    $no_login_screenshot          = 'https://www.silkypress.com/wp-content/uploads/2025/03/multi-step-checkout-no-login-9-2.png';
+		    $no_login_screenshot          = 'https://www.silkypress.com/wp-content/uploads/2025/08/multi-step-checkout-no-login.png';
 			/* translators: 1: Woocommerce Accounts URL 2: Screenshot URL. */
 			$show_login_step              =  sprintf( __( 'Use the "Enable log-in during checkout" option on the <a href="%1$s">WP Admin -> WooCommerce -> Settings -> Accounts</a> page to add/remove the login form to the checkout. See <a href="%2$s" target="_blank">this screenshot</a>.', 'wp-multi-step-checkout' ), esc_url( $account_url ), esc_url( $no_login_screenshot ) );
 		} else {

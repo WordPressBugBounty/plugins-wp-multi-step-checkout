@@ -47,19 +47,19 @@ class WPMultiStepCheckout_Settings {
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script('wp-color-picker');
 
-        $u = plugins_url('/', WMSC_PLUGIN_FILE) . 'assets/';     // assets url
-        $f = plugins_url('/', WMSC_PLUGIN_FILE) . 'includes/frm/assets/';           // framework assets url
-        $v = WMSC_VERSION;                          // version
-        $d = array('jquery');                       // dependency
-        $w = true;                                  // where? in the footer?
+        $assets     = WMSC_PLUGIN_URL . 'assets/';
+        $frm_assets = WMSC_PLUGIN_URL . 'includes/frm/assets/';
+        $version    = WMSC_VERSION;
+        $dependency = array('jquery');
+        $where      = true;
 
         // Load scripts
-        wp_enqueue_script( 'wmsc-bootstrap', $f.'bootstrap.min.js', $d, $v, $w);
-        wp_enqueue_script( 'wmsc-admin-script', $u.'js/admin-script.js', $d, $v, $w);
+        wp_enqueue_script( 'wmsc-bootstrap', $frm_assets . 'bootstrap.min.js', $dependency, $version, $where);
+        wp_enqueue_script( 'wmsc-admin-script', $assets . 'js/admin-script.js', $dependency, $version, $where);
 
         // Load styles
-        wp_enqueue_style ( 'wmsc-bootstrap',   $f.'bootstrap.min.css', array(), $v);
-        wp_enqueue_style ( 'wmsc-admin-style', $u.'css/admin-style.css', array(), $v);
+        wp_enqueue_style ( 'wmsc-bootstrap',   $frm_assets . 'bootstrap.min.css', array(), $version);
+        wp_enqueue_style ( 'wmsc-admin-style', $assets . 'css/admin-style.css', array(), $version);
     }
 
     /**
@@ -84,7 +84,7 @@ class WPMultiStepCheckout_Settings {
 		$values_current = get_option( 'wmsc_options', array() );
 
 		$form = new \SilkyPressFrm\Form_Fields( $settings_all );
-		$form->add_setting( 'tooltip_img', plugins_url('/', WMSC_PLUGIN_FILE) . 'assets/images/question_mark.svg' );
+		$form->add_setting( 'tooltip_img', WMSC_PLUGIN_URL . 'assets/images/question_mark.svg' );
 		$form->add_setting( 'section', $tab_current );
 		$form->add_setting( 'label_class', 'col-sm-6' );
 		$form->set_current_values( $values_current );

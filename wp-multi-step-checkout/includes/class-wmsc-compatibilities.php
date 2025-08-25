@@ -733,7 +733,7 @@ class WMSC_Compatibilities {
 		}
 
 		if ( strstr( $template_name, 'form-checkout.php' ) ) {
-			$template = plugin_dir_path( WMSC_PLUGIN_FILE ) . 'includes/form-checkout.php';
+			$template = WP_PLUGIN_DIR . '/wp-multi-step-checkout/includes/form-checkout.php';
 		}
 
 		return $template;
@@ -747,7 +747,7 @@ class WMSC_Compatibilities {
 		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
 			return;
 		}
-		require_once plugin_dir_path( WMSC_PLUGIN_FILE ) . '/includes/elementor-widget-skin.php';
+		require_once WP_PLUGIN_DIR . '/wp-multi-step-checkout/includes/elementor-widget-skin.php';
 		add_action(
 			'elementor/widget/woocommerce-checkout-page/skins_init',
 			function( $widget ) {
@@ -762,7 +762,8 @@ class WMSC_Compatibilities {
 	 */
 	public static function before_woocommerce_init() {
 		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WMSC_PLUGIN_FILE, true );
+			$path = WP_PLUGIN_DIR . '/wp-multi-step-checkout/wp-multi-step-checkout.php';
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $path, true );
 		}
 	}
 
@@ -1062,4 +1063,4 @@ class WMSC_Compatibilities {
 	}
 }
 
-WMSC_Compatibilities::init();
+add_action( 'plugins_loaded', array( 'WMSC_Compatibilities', 'init' ) );

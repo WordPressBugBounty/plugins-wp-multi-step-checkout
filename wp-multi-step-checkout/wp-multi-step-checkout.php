@@ -4,7 +4,7 @@
  * Requires Plugins:     woocommerce
  * Plugin URI:           https://wordpress.org/plugins/wp-multi-step-checkout/
  * Description:          Split the different sections of the default WooCommerce checkout page into multiple steps
- * Version:              2.32
+ * Version:              2.33
  * Author:               SilkyPress
  * Author URI:           https://www.silkypress.com
  * License:              GPL2
@@ -13,7 +13,7 @@
  * Domain Path:          /languages/
  *
  * WC requires at least: 3.0.0
- * WC tested up to:      9.8
+ * WC tested up to:      10.2
  * Requires PHP:         5.2.4
  *
  * @package WPMultiStepCheckout
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		 *
 		 * @var string
 		 */
-		public static $version = '2.32';
+		public static $version = '2.33';
 
 		/**
 		 * Plugin's options.
@@ -89,7 +89,6 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( __CLASS__, 'settings_link' ) );
 
-			include_once 'includes/class-wmsc-compatibilities.php';
 		}
 
 
@@ -248,6 +247,9 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 
 	}
 
-add_action( 'plugins_loaded', array( 'WPMultiStepCheckout', 'init' ) );
+add_action( 'init', array( 'WPMultiStepCheckout', 'init' ) );
+
+
+include_once 'includes/class-wmsc-compatibilities.php';
 
 endif;

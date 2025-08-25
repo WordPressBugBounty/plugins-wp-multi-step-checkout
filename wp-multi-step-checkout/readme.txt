@@ -5,7 +5,7 @@ Email: diana@burduja.eu
 Tags: multistep checkout, multi step checkout, woocommerce, shop checkout, checkout steps
 Requires at least: 3.0.1
 Tested up to: 6.8
-Stable tag: 2.32
+Stable tag: 2.33
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -82,6 +82,9 @@ Another possible cause could be that the checkout page isn't using the default [
 6. On mobile devices
 
 == Changelog ==
+
+= 2.33 2025-08-25 =
+* Fix: _load_textdomain_just_in_time warning was showing up when activating the plugin
 
 = 2.32 2025-03-20 =
 * Feature: option for disabling the plugin on mobile devices
