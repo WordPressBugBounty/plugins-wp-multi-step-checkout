@@ -169,11 +169,11 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 				'buttons'     => array( '<div class="btn-group%s" data-toggle="buttons" id="btn-group-style-circle">%s</div>', array( $atts, $input_values ) ),
 				'input_color' => array(
 					'<input type="color" class="form-control" id="%s" name="%s" value="%s"%s /><span class="input-group-addon" id="color-text-color-hex">%s</span>',
-					array( $_key, $_key, $_field['value'], $atts, $_field['value'] ),
+					array( $_key, $_key, esc_attr( $_field['value'] ), $atts, $_field['value'] ),
 				),
 				'input_text'  => array(
 					'<input type="text" class="form-control" id="%s" name="%s" value="%s"%s />',
-					array( $_key, $_key, stripslashes( $_field['value'] ), $atts ),
+					array( $_key, $_key, esc_attr( $_field['value'] ), $atts ),
 				),
 				'checkbox'    => array(
 					'<input type="checkbox" id="%s" name="%s" value="1"%s />',

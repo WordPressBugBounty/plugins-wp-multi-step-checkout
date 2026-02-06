@@ -874,7 +874,7 @@ class WMSC_Compatibilities {
 	public static function wpmc_minimum_age_admin_settings( $settings ) {
 		$min_age = array(
 			'minimum_age_woo' => array(
-				'label'      => __( 'Show the <code>Minimum Age</code> fields in a separate step', 'wp-multi-step-checkout-pro' ),
+				'label'      => __( 'Show the <code>Minimum Age</code> fields in a separate step', 'wp-multi-step-checkout' ),
 				'input_form' => 'checkbox',
 				'value'      => false,
 				'section'    => 'general',
@@ -966,7 +966,7 @@ class WMSC_Compatibilities {
 
 		$woo_delivery = array(
 			'woo_delivery' => array(
-				'label'      => __( 'Show the <code>Delivery & Pickup Date Time</code> fields in a separate step', 'wp-multi-step-checkout-pro' ),
+				'label'      => __( 'Show the <code>Delivery & Pickup Date Time</code> fields in a separate step', 'wp-multi-step-checkout' ),
 				'input_form' => 'checkbox',
 				'value'      => false,
 				'section'    => 'general',

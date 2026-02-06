@@ -4,8 +4,8 @@ Contributors: diana_burduja
 Email: diana@burduja.eu
 Tags: multistep checkout, multi step checkout, woocommerce, shop checkout, checkout steps
 Requires at least: 3.0.1
-Tested up to: 6.8
-Stable tag: 2.33
+Tested up to: 6.9
+Stable tag: 2.34
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -83,6 +83,10 @@ Another possible cause could be that the checkout page isn't using the default [
 
 == Changelog ==
 
+= 2.34 2025-12-01 =
+* Security: added escaping to input values for admin text inputs. Reported by benzdeus
+* Fix: style steps to 100% width when there is only one step shown
+
 = 2.33 2025-08-25 =
 * Fix: _load_textdomain_just_in_time warning was showing up when activating the plugin
 
@@ -98,7 +102,7 @@ Another possible cause could be that the checkout page isn't using the default [
 * Fix: remove the errors after changing the value of the input field
 
 = 2.29 2024-09-10 =
-* Tweak: adjust to the changes in the WooCommerce /templates/checkout/form-login.php file.
+* Tweak: adjust to the changes in the WooCommerce /templates/checkout/form-login.php file
 
 = 2.28 2024-06-12 =
 * Tweak: place the login validation error messages under the step tabs
@@ -107,22 +111,5 @@ Another possible cause could be that the checkout page isn't using the default [
 = 2.27 2024-02-11 =
 * Compatibility with the Huntor theme
 * Fix: the steps don't scroll up to the top on the Flatsome theme
-
-= 2.26 2023-10-16 =
-* Fix: open the Login step when clicking the "Please log in" link in the "Account already registered" message
-* Feature: option to place the input fields from the Delivery & Pickup Time Date plugin in a separate step
-
-= 2.25 2023-06-24 =
-* Compatibility with the Mollie Payments plugin
-
-= 2.24 2023-05-19 =
-* Fix: missing "next/previous" button with the Elementor Pro checkout widget
-* Fix: the Payment section was missing on the Blocksy theme, when the payment is in a separate step
-* Fix: use the "default" checkout layout type from the Astra Addon Pro plugin 
-* Compatibility with the WooCommerce "Custom Order Tables" feature
-
-= 2.23 2023-02-03 =
-* Fix: add the "woocommerce_checkout_before_order_review" action hook
-* Compatibility with the Fastland theme.
 
 [See changelog for all versions](https://plugins.svn.wordpress.org/wp-multi-step-checkout/trunk/changelog.txt).

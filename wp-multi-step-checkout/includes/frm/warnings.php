@@ -68,7 +68,7 @@ class SilkyPress_Warnings {
             $nonce =  wp_create_nonce( $_n['id'] );
             if ( !isset($_n['class'])) $_n['class'] = 'notice notice-warning is-dismissible';
             $_n['class'] .= ' sk-notice-dismiss';
-            printf( '<div class="%1$s" id="%2$s" data-nonce="%3$s"><p>%4$s</p></div>', $_n['class'], $_n['id'], $nonce, $_n['message'] );
+            printf( '<div class="%1$s" id="%2$s" data-nonce="%3$s"><p>%4$s</p></div>', esc_attr( $_n['class'] ), esc_attr( $_n['id'] ), $nonce, esc_html( $_n['message'] ) );
         }
             ?>
                 <script type='text/javascript'>

@@ -34,6 +34,10 @@
 	width: 100%;
 }
 
+.wpmc-tabs-list.wpmc-1-tabs .wpmc-tab-item {
+	width: 100%;
+}
+
 .wpmc-tabs-list.wpmc-2-tabs .wpmc-tab-item {
 	width: 50%;
 }

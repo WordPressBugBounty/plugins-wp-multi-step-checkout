@@ -101,8 +101,8 @@ $images_url = site_url().'/wp-content/plugins/wp-multi-step-checkout/assets/imag
         <h3><?php _e('Like this Plugin?', 'wp-multi-step-checkout'); ?></h3>
     </div>
         <div class="metabox-holder rating" style="text-align: center;"> 
-        <p><?php _e('Share your opinion with the world on the WordPress.org Plugin Repository.', 'wp-image-zoooom'); ?></p>
-        <p><a href="https://wordpress.org/plugins/wp-multi-step-checkout/" target="_blank" class="button"><?php _e('Rate it on WordPress.org', 'wp-image-zoooom'); ?></a></p>
+        <p><?php _e('Share your opinion with the world on the WordPress.org Plugin Repository.', 'wp-multi-step-checkout'); ?></p>
+        <p><a href="https://wordpress.org/plugins/wp-multi-step-checkout/" target="_blank" class="button"><?php _e('Rate it on WordPress.org', 'wp-multi-step-checkout'); ?></a></p>
         </div> 
     </div>   
 </div>

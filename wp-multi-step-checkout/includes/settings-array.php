@@ -38,7 +38,7 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 				'label'      => __( 'Show the <code>Login</code> step', 'wp-multi-step-checkout' ),
 				'input_form' => 'checkbox',
 				'value'      => true,
-				'description'=> __( 'If unchecked, then the login form will show up before the steps, as WooCommerce normally shows it.', 'wp-multi-step-checkout-pro' ),
+				'description'=> __( 'If unchecked, then the login form will show up before the steps, as WooCommerce normally shows it.', 'wp-multi-step-checkout' ),
 				'section'    => 'general',
 				'pro'        => false,
 			),
@@ -162,7 +162,7 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 				'pro'         => true,
 			),
 			'disable_mobile'            => array(
-				'label'       => __( 'Disable plugin on mobile devices', 'wp-multi-step-checkout-pro' ),
+				'label'       => __( 'Disable plugin on mobile devices', 'wp-multi-step-checkout' ),
 				'description' => __( 'On mobile devices (smart phone, tablet, etc.) your customers will see the default WooCommerce checkout form, without the steps from the Multi-Step Checkout for WooCommerce plugin', 'wp-multi-step-checkout' ),
 				'input_form'  => 'checkbox',
 				'value'       => false,
