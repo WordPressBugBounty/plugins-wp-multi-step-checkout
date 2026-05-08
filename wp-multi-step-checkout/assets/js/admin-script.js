@@ -1,6 +1,5 @@
 jQuery(document).ready(function( $ ){
     $('#wpmc-main_color').wpColorPicker();
-    $('[data-toggle="tooltip"]').tooltip();
 
 	/*
 	 * Toggle the step title strings
@@ -34,4 +33,12 @@ jQuery(document).ready(function( $ ){
 			form_group.hide('slow');
 		}
 	}
+
+
+	/*
+	 * Hide alerts, when the "dismiss" icon is clicked
+	 */
+	$('div.alert button.close').on('click', function() {
+		$(this).parent().hide();
+	} );
 });

@@ -346,7 +346,7 @@ if ( ! function_exists( 'wmsc_step_content_login' ) ) {
 	 * @param bool   $stop_at_login If the user should be logged in in order to checkout.
 	 */
 	function wmsc_step_content_login( $checkout, $stop_at_login, $registration_with_login = true ) { ?> 
-	<div class="wpmc-step-item wpmc-step-login">
+	<div class="wpmc-step-item wpmc-step-login current">
 			<div id="checkout_login" class="woocommerce_checkout_login wp-multi-step-checkout-step">
 				<?php
 				woocommerce_login_form(

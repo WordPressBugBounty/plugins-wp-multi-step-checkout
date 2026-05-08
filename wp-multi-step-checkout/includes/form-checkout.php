@@ -124,7 +124,7 @@ do_action( 'wpmc_after_step_tabs' );
 	<?php do_action( 'wpmc-woocommerce_checkout_coupon_form', $checkout ); ?>
 </div>
 
-<div id="woocommerce_before_checkout_form" class="woocommerce_before_checkout_form" data-step="<?php echo apply_filters('woocommerce_before_checkout_form_step', 'step-review'); ?>" style="display: none;">
+<div id="woocommerce_before_checkout_form" class="woocommerce_before_checkout_form" data-step="<?php echo esc_attr( apply_filters('woocommerce_before_checkout_form_step', 'step-review') ); ?>" style="display: none;">
     <?php do_action( 'woocommerce_before_checkout_form', $checkout ); ?>
 </div>
 
@@ -146,8 +146,8 @@ do_action( 'wpmc_after_step_tabs' );
 <?php $first_step = ( $show_login_step && $options['show_login_step'] ) ? '' : ' current';
 
 foreach( $steps as $_id => $_step ) {
-    echo '<!-- Step: '.$_step['title'].' -->'; 
-	echo '<div class="wpmc-step-item '.$_step['class']. $first_step . '">';
+    echo '<!-- Step: '. esc_html( $_step['title'] ) .' -->'; 
+	echo '<div class="wpmc-step-item '. esc_attr( $_step['class'] ) . esc_attr( $first_step ) . '">';
     if ( isset($_step['sections'] ) ) {
         foreach ( $_step['sections'] as $_section ) {
             if ( strpos($_section, 'woocommerce_') === 0 ) {

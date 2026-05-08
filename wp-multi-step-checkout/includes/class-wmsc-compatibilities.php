@@ -920,6 +920,7 @@ class WMSC_Compatibilities {
 	 * @return array
 	 */
 	public static function wpmc_add_minimum_age_step( $steps ) {
+		// phpcs:ignore WordPress.WP.I18n.TextDomainMismatch 
 		$title                = get_option( 'min_age_woo_checkout_title', _x( 'Verify your age', 'checkout section default', 'minimum-age-woocommerce' ) );
 		$steps['minimum_age'] = array(
 			'title'    => $title,
@@ -1024,9 +1025,9 @@ class WMSC_Compatibilities {
 
 		// Title.
 		$other_settings = get_option('coderockz_woo_delivery_other_settings');
-		$title = __( 'Delivery', 'woo-delivery' );
+		$title = __( 'Delivery', 'woo-delivery' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch 
 		if ( isset($other_settings['delivery_heading_checkout']) && !empty($other_settings['delivery_heading_checkout']) ) {
-			$title = __(stripslashes($other_settings['delivery_heading_checkout']), 'woo-delivery');
+			$title = __(stripslashes($other_settings['delivery_heading_checkout']), 'woo-delivery'); // phpcs:ignore
 		}
 		
 		// Position.

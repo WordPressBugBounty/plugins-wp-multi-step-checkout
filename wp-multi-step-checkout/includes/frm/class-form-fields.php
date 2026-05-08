@@ -199,7 +199,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 			// The description.
 			if ( isset( $_field['description'] ) && ! empty( $_field['description'] ) ) {
 				$description = vsprintf(
-					' <img src="%s" data-toggle="tooltip" data-placement="top" title="%s" data-original-title="%s" />',
+					' <div class="tooltip-container tooltip-top"><img src="%s" /><span class="tooltip-text">%s</span></div>',
 					array( $this->atts['tooltip_img'], $_field['description'], $_field['description'] )
 				);
 			}
@@ -257,7 +257,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 				if ( 'input_color' === $settings['input_form'] && isset( $post[ $_key ] ) && ! preg_match( '/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $post[ $_key ] ) ) {
 					$reset = array(
 						/* translators: 1: field label 2: value */
-						__( 'Unrecognized %1$s. The value was reset to %2$s' ),
+						__( 'Unrecognized %1$s. The value was reset to %2$s', 'wp-multi-step-checkout' ),
 						array( '<b>' . $settings['label'] . '</b>', '<b>' . $settings['value'] . '</b>' ),
 					);
 				}
@@ -271,7 +271,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 				if ( in_array( $settings['input_form'], array( 'button', 'radio' ), true ) && isset( $post[ $_key ] ) && ! array_key_exists( $post[ $_key ], $settings['values'] ) ) {
 					$reset = array(
 						/* translators: 1: field label 2: value */
-						__( 'Unrecognized %1$s. The value was reset to %2$s' ),
+						__( 'Unrecognized %1$s. The value was reset to %2$s', 'wp-multi-step-checkout' ),
 						array( '<b>' . $settings['label'] . '</b>', '<b>' . $settings['value'] . '</b>' ),
 					);
 				}
@@ -284,7 +284,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 								'info',
 								vsprintf(
 									/* translators: 1: field label 2: value */
-									__( 'The %1$s field accepts only an integer value. It was set to %2$s' ),
+									__( 'The %1$s field accepts only an integer value. It was set to %2$s', 'wp-multi-step-checkout' ),
 									array( '<b>' . $settings['label'] . '</b>', (int) $post[ $_key ] )
 								)
 							);
@@ -297,7 +297,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 								'info',
 								vsprintf(
 									/* translators: 1: field label 2: value */
-									__( 'The %1$s field accepts only a number. It was set to %2$s' ),
+									__( 'The %1$s field accepts only a number. It was set to %2$s', 'wp-multi-step-checkout' ),
 									array( '<b>' . $settings['label'] . '</b>', (float) $post[ $_key ] )
 								)
 							);
@@ -310,7 +310,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 							$post[ $_key ] > $settings['validate']['range'][1] ) ) {
 						$reset = array(
 							/* translators: 1: field label 2: minimum value 3: maximum value 4: value */
-							__( '%1$s accepts values between %2$s and %3$s. Your value was reset to %4$s' ),
+							__( '%1$s accepts values between %2$s and %3$s. Your value was reset to %4$s', 'wp-multi-step-checkout' ),
 							array( '<b>' . $settings['label'] . '</b>', $settings['validate']['range'][0], $settings['validate']['range'][1], '<b>' . $settings['value'] . '</b>' ),
 						);
 					}

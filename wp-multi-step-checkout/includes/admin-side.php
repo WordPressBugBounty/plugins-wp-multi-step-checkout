@@ -54,7 +54,6 @@ class WPMultiStepCheckout_Settings {
         $where      = true;
 
         // Load scripts
-        wp_enqueue_script( 'wmsc-bootstrap', $frm_assets . 'bootstrap.min.js', $dependency, $version, $where);
         wp_enqueue_script( 'wmsc-admin-script', $assets . 'js/admin-script.js', $dependency, $version, $where);
 
         // Load styles
@@ -113,10 +112,12 @@ class WPMultiStepCheckout_Settings {
 		}
 
         // Premium tooltips.
-        $message = __('Available only in <a href="%1$s" target="_blank">Pro version</a>', 'wp-multi-step-checkout');
-        $message = wp_kses( $message, array('a' => array('href' => array(), 'target'=> array())));
-        $message = sprintf( $message, 'https://www.silkypress.com/woocommerce-multi-step-checkout-pro/?utm_source=wordpress&utm_campaign=wmsc_free&utm_medium=banner');
-        new SilkyPress_PremiumTooltips($message); 
+		new SilkyPress_PremiumTooltips( [
+			/* translators: 1: url */
+			'message'      => __('Available only in <a href="%1$s" target="_blank">Pro version</a>', 'wp-multi-step-checkout'),
+			'allowed_html' => ['a' => ['href' => true, 'target'=> true]],
+			'url'          => 'https://www.silkypress.com/woocommerce-multi-step-checkout-pro/?utm_source=wordpress&utm_campaign=wmsc_free&utm_medium=banner',
+		] );
 
 		// Render the content.
 		$messages = $form->render_messages();

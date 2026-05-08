@@ -5,7 +5,7 @@ Email: diana@burduja.eu
 Tags: multistep checkout, multi step checkout, woocommerce, shop checkout, checkout steps
 Requires at least: 3.0.1
 Tested up to: 6.9
-Stable tag: 2.34
+Stable tag: 2.35
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -82,6 +82,11 @@ Another possible cause could be that the checkout page isn't using the default [
 6. On mobile devices
 
 == Changelog ==
+
+= 2.35 2026-05-08 =
+* Fix: show the content of the Login step also before loading the JS
+* Tweak: remove the Bootstrap JS library from the plugin's admin pages
+* Tweak: move the output escaping at the point where the data is being outputted
 
 = 2.34 2025-12-01 =
 * Security: added escaping to input values for admin text inputs. Reported by benzdeus

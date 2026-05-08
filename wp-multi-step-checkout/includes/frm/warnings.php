@@ -40,12 +40,17 @@ class SilkyPress_Warnings {
     /**
      * Add this message to the $this->notices array
      */
-    function add_notice($id, $message, $class = '') {
+    function add_notice($id, $message, $class = '', $allowed_html = false) {
         if ( get_option($id) != false ) return false;
 
+		if ( $allowed_html === false ) {
+			$allowed_html = ['b' => true, 'a' => ['href' => true, 'target' => true]];
+		}
+
         $notice = array(
-            'id'        => $id,
-            'message'   => $message,
+            'id'           => $id,
+            'message'      => $message,
+			'allowed_html' => $allowed_html,
         );
         if ( !empty($class) ) $notice['class'] = $class;
 
@@ -68,7 +73,13 @@ class SilkyPress_Warnings {
             $nonce =  wp_create_nonce( $_n['id'] );
             if ( !isset($_n['class'])) $_n['class'] = 'notice notice-warning is-dismissible';
             $_n['class'] .= ' sk-notice-dismiss';
-            printf( '<div class="%1$s" id="%2$s" data-nonce="%3$s"><p>%4$s</p></div>', esc_attr( $_n['class'] ), esc_attr( $_n['id'] ), $nonce, esc_html( $_n['message'] ) );
+			printf(
+				'<div class="%1$s" id="%2$s" data-nonce="%3$s"><p>%4$s</p></div>',
+				esc_attr( $_n['class'] ),
+				esc_attr( $_n['id'] ),
+				esc_attr( $nonce ),
+				wp_kses(  $_n['message'], $_n['allowed_html'] )
+			);
         }
             ?>
                 <script type='text/javascript'>

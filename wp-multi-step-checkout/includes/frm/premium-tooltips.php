@@ -29,7 +29,12 @@ class SilkyPress_PremiumTooltips {
             <div style=""></div>
         </div>
         <div class="skp-premium-tooltip--msg">
-            <label><?php echo $message; ?></label>
+			<label><?php
+				printf(
+					wp_kses(  $message['message'], $message['allowed_html'] ),
+					esc_url( $message['url'] )
+				);
+			?></label>
         </div>
     </div>
     <?php

@@ -51,6 +51,7 @@ $images_url = site_url().'/wp-content/plugins/wp-multi-step-checkout/assets/imag
     border: none;
     box-shadow: none;
     vertical-align: middle;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     height: 32px;
     line-height: 32px;
@@ -60,13 +61,16 @@ $images_url = site_url().'/wp-content/plugins/wp-multi-step-checkout/assets/imag
     text-align: center;
     margin: 10px auto;
 }
+#wpbody-content .metabox-holder {
+	padding: 10px;
+}
 #wpbody-content .metabox-holder.rating {
-    background: url(<?php echo $images_url; ?>rating.png) 100% 80% no-repeat;
+    background: url(<?php echo esc_url( $images_url ); ?>rating.png) 100% 80% no-repeat;
     background-size: auto auto;
     background-size: 50%;
 }
 #wpbody-content .metabox-holder.discount {
-    background: url(<?php echo $images_url; ?>discount.png) 102% 102% no-repeat;
+    background: url(<?php echo esc_url( $images_url ); ?>discount.png) 102% 102% no-repeat;
     background-size: auto auto;
     background-size: 50%;
 }
@@ -77,7 +81,7 @@ $images_url = site_url().'/wp-content/plugins/wp-multi-step-checkout/assets/imag
     <?php if ( $show_discount ) : ?>
     <div class="panel main_container">
     <div class="container_title">
-    <h3><img src="<?php echo $images_url; ?>checkout-cart.svg" width="24" /> <?php _e('WooCommerce Multi-Step Checkout Pro', 'wp-multi-step-checkout'); ?></h3>
+    <h3><img src="<?php echo esc_url( $images_url ); ?>checkout-cart.svg" width="24" /> <?php esc_html_e('WooCommerce Multi-Step Checkout Pro', 'wp-multi-step-checkout'); ?></h3>
     </div>
         <div class="metabox-holder discount" style="text-align: center;"> 
                 
@@ -85,12 +89,12 @@ $images_url = site_url().'/wp-content/plugins/wp-multi-step-checkout/assets/imag
 
         <p>
         <span style="color: #bc1117; font-size: 24px;">30% OFF</span><br />
-        only between <span style="color: #bc1117;"><?php echo $start_date; ?> - <?php echo $end_date; ?></span>. 
+        only between <span style="color: #bc1117;"><?php echo esc_html( $start_date ); ?> - <?php echo esc_html( $end_date ); ?></span>. 
 
         </p>
         <p>Don't tell anyone.</p>
         <p style="text-align: center;">
-            <a href="<?php echo $offer_link; ?>" target="_blank" class="button" rel="noreferrer"><?php _e('Upgrade to PRO', 'wp-multi-step-checkout'); ?></a>
+            <a href="<?php echo esc_url( $offer_link ); ?>" target="_blank" class="button" rel="noreferrer"><?php esc_html_e('Upgrade to PRO', 'wp-multi-step-checkout'); ?></a>
         </p>
         </div> 
     </div>   
@@ -98,11 +102,11 @@ $images_url = site_url().'/wp-content/plugins/wp-multi-step-checkout/assets/imag
     
     <div class="panel main_container">
     <div class="container_title">
-        <h3><?php _e('Like this Plugin?', 'wp-multi-step-checkout'); ?></h3>
+        <h3><?php esc_html_e('Like this Plugin?', 'wp-multi-step-checkout'); ?></h3>
     </div>
         <div class="metabox-holder rating" style="text-align: center;"> 
-        <p><?php _e('Share your opinion with the world on the WordPress.org Plugin Repository.', 'wp-multi-step-checkout'); ?></p>
-        <p><a href="https://wordpress.org/plugins/wp-multi-step-checkout/" target="_blank" class="button"><?php _e('Rate it on WordPress.org', 'wp-multi-step-checkout'); ?></a></p>
+        <p><?php esc_html_e('Share your opinion with the world on the WordPress.org Plugin Repository.', 'wp-multi-step-checkout'); ?></p>
+        <p><a href="https://wordpress.org/plugins/wp-multi-step-checkout/" target="_blank" class="button"><?php esc_html_e('Rate it on WordPress.org', 'wp-multi-step-checkout'); ?></a></p>
         </div> 
     </div>   
 </div>

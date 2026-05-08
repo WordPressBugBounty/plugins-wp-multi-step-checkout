@@ -1,5 +1,39 @@
 == Changelog ==
 
+= 2.35 2026-05-08 =
+* Fix: show the content of the Login step also before loading the JS
+* Tweak: remove the Bootstrap JS library from the plugin's admin pages
+* Tweak: move the output escaping at the point where the data is being outputted
+
+= 2.34 2025-12-01 =
+* Security: added escaping to input values for admin text inputs. Reported by benzdeus
+* Fix: style steps to 100% width when there is only one step shown
+
+= 2.33 2025-08-25 =
+* Fix: _load_textdomain_just_in_time warning was showing up when activating the plugin
+
+= 2.32 2025-03-20 =
+* Feature: option for disabling the plugin on mobile devices
+* Feature: option for toggling the default WooCommerce login form and the Login step
+
+= 2.31 2024-11-22 =
+* Fix: use the pro version, if both the free and the pro version are simultaneously active
+
+= 2.30 2024-11-20 =
+* Feature: add the "Hide the Shipping step if there are only virtual products in the cart" option
+* Fix: remove the errors after changing the value of the input field
+
+= 2.29 2024-09-10 =
+* Tweak: adjust to the changes in the WooCommerce /templates/checkout/form-login.php file
+
+= 2.28 2024-06-12 =
+* Tweak: place the login validation error messages under the step tabs
+* Show the "Inline validation errors" option
+
+= 2.27 2024-02-11 =
+* Compatibility with the Huntor theme
+* Fix: the steps don't scroll up to the top on the Flatsome theme
+
 = 2.26 2023-10-16 =
 * Fix: open the Login step when clicking the "Please log in" link in the "Account already registered" message
 * Feature: option to place the input fields from the Delivery & Pickup Time Date plugin in a separate step
