@@ -78,7 +78,7 @@ class SilkyPress_Warnings {
 				esc_attr( $_n['class'] ),
 				esc_attr( $_n['id'] ),
 				esc_attr( $nonce ),
-				wp_kses(  $_n['message'], $_n['allowed_html'] )
+				wp_kses( $_n['message'], $_n['allowed_html'] )
 			);
         }
             ?>

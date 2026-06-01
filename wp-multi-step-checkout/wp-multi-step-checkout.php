@@ -4,7 +4,7 @@
  * Requires Plugins:     woocommerce
  * Plugin URI:           https://wordpress.org/plugins/wp-multi-step-checkout/
  * Description:          Split the different sections of the default WooCommerce checkout page into multiple steps
- * Version:              2.35
+ * Version:              2.35.1
  * Author:               SilkyPress
  * Author URI:           https://www.silkypress.com
  *
@@ -12,7 +12,7 @@
  * Domain Path:          /languages/
  *
  * WC requires at least: 3.0.0
- * WC tested up to:      10.8
+ * WC tested up to:      10.9
  * Requires PHP:         5.2.4
  *
  * @package WPMultiStepCheckout
@@ -33,7 +33,7 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 		 *
 		 * @var string
 		 */
-		public static $version = '2.35';
+		public static $version = '2.35.1';
 
 		/**
 		 * Plugin's options.
@@ -83,8 +83,6 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 			self::adjust_hooks();
 
 			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'wp_enqueue_scripts' ) );
-
-			add_action( 'init', array( __CLASS__, 'load_plugin_textdomain' ) );
 
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( __CLASS__, 'settings_link' ) );
 
@@ -184,14 +182,6 @@ if ( ! class_exists( 'WPMultiStepCheckout' ) ) :
 			<p><?php _x( 'The <b>Multi-Step Checkout for WooCommerce</b> plugin is enabled, but it requires WooCommerce in order to work.', 'Alert Message: WooCommerce require', 'wp-multi-step-checkout' ); ?></p>
 			</div>
 			<?php
-		}
-
-
-		/**
-		 * Load the textdomain
-		 */
-		public static function load_plugin_textdomain() {
-			load_plugin_textdomain( 'wp-multi-step-checkout', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 		}
 
 		/**

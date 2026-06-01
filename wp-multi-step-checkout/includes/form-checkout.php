@@ -5,13 +5,14 @@
  * This is an overridden copy of the woocommerce/templates/checkout/form-checkout.php file.
  *
  * @package WPMultiStepCheckout
+ * @version 9.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
 // check the WooCommerce MultiStep Checkout options
 $options = get_option('wmsc_options');
-require_once 'settings-array.php';
+require_once WP_PLUGIN_DIR . '/wp-multi-step-checkout/includes/settings-array.php'; 
 if ( !is_array($options) || count($options) === 0 ) {
     $defaults = get_wmsc_settings();
     $options = array();
@@ -33,7 +34,6 @@ if ( isset($options['t_wpml']) && $options['t_wpml'] == 1 ) {
 
 if ( !isset($options['c_sign']) ) $options['c_sign'] = '&';
 if ( !isset($options['show_login_step']) ) $options['show_login_step'] = true;
-
 
 // Get the steps
 $steps = get_wmsc_steps();

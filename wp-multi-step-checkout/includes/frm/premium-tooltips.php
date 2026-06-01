@@ -29,9 +29,8 @@ class SilkyPress_PremiumTooltips {
             <div style=""></div>
         </div>
         <div class="skp-premium-tooltip--msg">
-			<label><?php
-				printf(
-					wp_kses(  $message['message'], $message['allowed_html'] ),
+			<label><?php printf(
+					wp_kses( $message['message'], $message['allowed_html'] ),
 					esc_url( $message['url'] )
 				);
 			?></label>
@@ -86,7 +85,7 @@ class SilkyPress_PremiumTooltips {
     ?>
     <script type="text/javascript">
         jQuery(document).ready(function($){
-            $(".form-group.disabled-short, .form-group.disabled").on('click',function(e){
+            $(".form-group.disabled-short, .form-group.disabled").on('click', function(e){
                 if(typeof window.tooltip != "undefined"){
                     clearTimeout(window.tooltip);
                 }
