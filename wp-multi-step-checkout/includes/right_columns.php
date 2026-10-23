@@ -24,8 +24,8 @@ if ( $now - 3*86400 < $wmsc_activation_time ) {
     $show_discount = true;
 }
 
-$start_date = date('j M', $wmsc_activation_time - 3*86400 );
-$end_date = date('j M', $wmsc_activation_time + 2*86400 );
+$start_date = gmdate('j M', $wmsc_activation_time - 3*86400 );
+$end_date = gmdate('j M', $wmsc_activation_time + 2*86400 );
 
 
 
