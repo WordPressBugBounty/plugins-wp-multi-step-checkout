@@ -30,10 +30,7 @@ class SilkyPress_Warnings {
         if ( !isset( $_SERVER ) || !isset( $_SERVER['REQUEST_URI'] ) ) {
             return false;
         }
-        if ( strpos( $_SERVER['REQUEST_URI'], $url_part ) !== false ) { 
-            return true;
-        }
-        return false;
+        return strpos( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $url_part ) !== false;
     }
 
 
@@ -106,16 +103,15 @@ class SilkyPress_Warnings {
      */
     function notice_dismiss() {
 
-        $option = $_POST['option'];
+        $option = isset( $_POST['option'] ) ? sanitize_text_field( wp_unslash( $_POST['option'] ) ) : '';
 
-        if ( ! in_array($option, $this->allowed_actions ) ) return; 
+        if ( ! in_array($option, $this->allowed_actions ) ) wp_die( -1 ); 
 
         check_ajax_referer( $option, 'nonce' );
 
         update_option( $option, 1 );
 
-
-        wp_die();
+        wp_die( 1 );
     }
 }
 }

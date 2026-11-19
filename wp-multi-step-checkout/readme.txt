@@ -3,9 +3,9 @@ Created: 30/10/2017
 Contributors: diana_burduja
 Email: diana@burduja.eu
 Tags: multistep checkout, multi step checkout, woocommerce, shop checkout, checkout steps
-Requires at least: 3.0.1
+Requires at least: 4.4 
 Tested up to: 7.1
-Stable tag: 2.35.1
+Stable tag: 2.36
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -83,8 +83,13 @@ Another possible cause could be that the checkout page isn't using the default [
 
 == Changelog ==
 
-= 2.35.1 2026-01-01 =
-* Declare compatibility WP7.0
+= 2.36 2026-11-19 =
+* Increase WP requirement to 4.4 
+* Fix: add missing string sanitizations
+* Fix: add missing text domain to translatable strings
+
+= 2.35.1 2026-08-31 =
+* Declare compatibility WP7.1
 * Declare WC template version for the form-checkout.php file
 
 = 2.35 2026-05-08 =
@@ -103,22 +108,5 @@ Another possible cause could be that the checkout page isn't using the default [
 * Feature: option for disabling the plugin on mobile devices
 * Feature: option for toggling the default WooCommerce login form and the Login step
 
-= 2.31 2024-11-22 =
-* Fix: use the pro version, if both the free and the pro version are simultaneously active
-
-= 2.30 2024-11-20 =
-* Feature: add the "Hide the Shipping step if there are only virtual products in the cart" option
-* Fix: remove the errors after changing the value of the input field
-
-= 2.29 2024-09-10 =
-* Tweak: adjust to the changes in the WooCommerce /templates/checkout/form-login.php file
-
-= 2.28 2024-06-12 =
-* Tweak: place the login validation error messages under the step tabs
-* Show the "Inline validation errors" option
-
-= 2.27 2024-02-11 =
-* Compatibility with the Huntor theme
-* Fix: the steps don't scroll up to the top on the Flatsome theme
 
 [See changelog for all versions](https://plugins.svn.wordpress.org/wp-multi-step-checkout/trunk/changelog.txt).

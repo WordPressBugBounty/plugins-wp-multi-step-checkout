@@ -7,6 +7,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound,WordPress.WP.I18n.TextDomainMismatch
+
 if ( ! function_exists( 'get_wmsc_settings' ) ) {
 
 	/**
@@ -280,7 +282,7 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 				'input_form'  => 'input_text',
 				'value'       => __( '&', 'wp-multi-step-checkout' ),
 				'section'     => 'titles',
-				'description' => __( 'The sign between two unified steps. For example "Billing & Shipping"' ),
+				'description' => __( 'The sign between two unified steps. For example "Billing & Shipping"', 'wp-multi-step-checkout' ),
 			),
 			't_wpml'                   => array(
 				'label'       => __( 'Use WPML to translate the text on the Steps and Buttons', 'wp-multi-step-checkout' ),
@@ -602,3 +604,5 @@ if ( ! function_exists( 'wmsc_delete_step_by_category' ) ) {
 	}
 }
 add_filter( 'wpmc_modify_steps', 'wmsc_delete_step_by_category', 30 );
+
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound,WordPress.WP.I18n.TextDomainMismatch

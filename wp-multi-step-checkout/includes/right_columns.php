@@ -7,6 +7,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 $now = time();
 
 $wmsc_activation_time = get_option( 'wmsc_activation_time', '' );
@@ -29,7 +31,7 @@ $end_date = gmdate('j M', $wmsc_activation_time + 2*86400 );
 
 
 
-function iz_convert_numbers_letters( $text, $from = 'numbers' ) {
+function wmsc_convert_numbers_letters( $text, $from = 'numbers' ) {
     $alphabet = str_split('abcdefghij');
     $numbers = str_split('0123456789');
 
@@ -40,7 +42,7 @@ function iz_convert_numbers_letters( $text, $from = 'numbers' ) {
     }
 }
 
-$offer_link = 'https://www.silkypress.com/woocommerce-multi-step-checkout-pro/?a=' . iz_convert_numbers_letters( $wmsc_activation_time ) . '&utm_source=wordpress&utm_campaign=iz_offer&utm_medium=banner';
+$offer_link = 'https://www.silkypress.com/woocommerce-multi-step-checkout-pro/?a=' . wmsc_convert_numbers_letters( $wmsc_activation_time ) . '&utm_source=wordpress&utm_campaign=iz_offer&utm_medium=banner';
 
 $images_url = site_url().'/wp-content/plugins/wp-multi-step-checkout/assets/images/';
 ?>
@@ -113,3 +115,4 @@ $images_url = site_url().'/wp-content/plugins/wp-multi-step-checkout/assets/imag
 
 <div style="clear: both"></div>
 
+<?php // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>

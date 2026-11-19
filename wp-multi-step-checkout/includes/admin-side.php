@@ -74,7 +74,7 @@ class WPMultiStepCheckout_Settings {
             'titles'        => __('Text on Steps and Buttons', 'wp-multi-step-checkout')
         );
 
-        $tab_current = (isset($_GET['tab'])) ? $_GET['tab'] : 'general';
+        $tab_current = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'general';
 
         if ( ! isset( $tabs[ $tab_current ] ) ) $tab_current = 'general';
 
@@ -105,7 +105,7 @@ class WPMultiStepCheckout_Settings {
 				}
 
 				if ( update_option( 'wmsc_options', $values_post_sanitized ) ) {
-					$form->add_message( 'success', '<b>'. __('Your settings have been saved.') . '</b>' );
+					$form->add_message( 'success', '<b>'. __('Your settings have been saved.', 'wp-multi-step-checkout' ) . '</b>' );
 				}
 			}
 			

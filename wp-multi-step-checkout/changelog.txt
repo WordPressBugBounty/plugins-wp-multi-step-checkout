@@ -1,5 +1,14 @@
 == Changelog ==
 
+= 2.36 2026-11-19 =
+* Increase WP requirement to 4.4 
+* Fix: add missing string sanitizations
+* Fix: add missing text domain to translatable strings
+
+= 2.35.1 2026-08-31 =
+* Declare compatibility WP7.1
+* Declare WC template version for the form-checkout.php file
+
 = 2.35 2026-05-08 =
 * Fix: show the content of the Login step also before loading the JS
 * Tweak: remove the Bootstrap JS library from the plugin's admin pages

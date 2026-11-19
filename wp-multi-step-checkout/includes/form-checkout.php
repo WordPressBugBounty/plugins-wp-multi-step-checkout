@@ -10,6 +10,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+
 // check the WooCommerce MultiStep Checkout options
 $options = get_option('wmsc_options');
 require_once WP_PLUGIN_DIR . '/wp-multi-step-checkout/includes/settings-array.php'; 
@@ -54,6 +56,7 @@ $checkout_url = apply_filters( 'woocommerce_get_checkout_url', version_compare( 
 
 // Both options disabled for "Guest" on the WP Admin -> WooCommerce -> Settings -> Accounts & Privacy page
 if ( ! $is_registration_enabled && $checkout->is_registration_required() && ! is_user_logged_in() && ! $show_login_step) {
+	// phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
 	echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );
 	return;
 }
@@ -151,7 +154,7 @@ foreach( $steps as $_id => $_step ) {
     if ( isset($_step['sections'] ) ) {
         foreach ( $_step['sections'] as $_section ) {
             if ( strpos($_section, 'woocommerce_') === 0 ) {
-                do_action( $_section );
+                do_action( $_section ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
             } else {
                 do_action('wmsc_step_content_' . $_section);
             }
@@ -166,5 +169,7 @@ foreach( $steps as $_id => $_step ) {
 
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>
 </div>
+
+<?php // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound  ?>
 
 <?php include dirname(__FILE__) . '/form-buttons.php'; ?>

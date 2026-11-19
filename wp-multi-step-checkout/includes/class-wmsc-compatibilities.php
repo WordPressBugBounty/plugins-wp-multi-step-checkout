@@ -493,6 +493,7 @@ class WMSC_Compatibilities {
 		 * Blocksy theme.
 		 */
 		if ( strpos( $theme, 'blocksy' ) !== false ) {
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			do_action( 'cfw_checkout_main_container_start' );
 		}
 
@@ -920,7 +921,7 @@ class WMSC_Compatibilities {
 	 * @return array
 	 */
 	public static function wpmc_add_minimum_age_step( $steps ) {
-		// phpcs:ignore WordPress.WP.I18n.TextDomainMismatch 
+		// phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
 		$title                = get_option( 'min_age_woo_checkout_title', _x( 'Verify your age', 'checkout section default', 'minimum-age-woocommerce' ) );
 		$steps['minimum_age'] = array(
 			'title'    => $title,
@@ -1023,12 +1024,16 @@ class WMSC_Compatibilities {
 	 */
 	public static function wpmc_add_woo_delivery_step( $steps ) {
 
+		// phpcs:disable
+
 		// Title.
 		$other_settings = get_option('coderockz_woo_delivery_other_settings');
-		$title = __( 'Delivery', 'woo-delivery' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch 
+		$title = __( 'Delivery', 'woo-delivery' );
 		if ( isset($other_settings['delivery_heading_checkout']) && !empty($other_settings['delivery_heading_checkout']) ) {
-			$title = __(stripslashes($other_settings['delivery_heading_checkout']), 'woo-delivery'); // phpcs:ignore
+			$title = __(stripslashes($other_settings['delivery_heading_checkout']), 'woo-delivery');
 		}
+
+		// phpcs:enable
 		
 		// Position.
 		$position_translate = [
